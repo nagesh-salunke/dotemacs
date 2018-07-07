@@ -39,18 +39,15 @@
   (when (fboundp mode) (funcall mode -1)))
 
 (use-package company
-  :ensure t
   :diminish company-mode
   :init (add-hook 'after-init-hook 'global-company-mode))
 
 ;; beacon-mode
 (use-package beacon
-  :ensure t
   :config
   (beacon-mode))
 
 (use-package ido
-  :ensure t
   :init (progn (ido-mode 1)
                (ido-everywhere 1))
   :config
@@ -65,7 +62,6 @@
     (add-to-list 'ido-ignore-files "\\.DS_Store")))
 
 (use-package undo-tree
-  :ensure t
   :diminish undo-tree-mode
   :config
   (progn
@@ -74,27 +70,22 @@
     (setq undo-tree-visualizer-diff t)))
 
 (use-package rainbow-mode
-  :ensure t
   :config
   (rainbow-mode t))
 
 (use-package flycheck
-  :ensure t
   :config
     (add-hook 'after-init-hook 'global-flycheck-mode))
 
 (use-package yasnippet
-  :ensure t
   :config
   (yas-global-mode 1))
 
 (use-package hungry-delete
-  :ensure t
   :config
   (global-hungry-delete-mode))
 
 (use-package expand-region
-  :ensure t
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 
