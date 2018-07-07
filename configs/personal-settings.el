@@ -45,4 +45,29 @@
   :config
   (beacon-mode))
 
+(use-package ido
+  :defer t
+  :init (progn (ido-mode 1)
+               (ido-everywhere 1))
+  :config
+  (progn
+    (setq ido-case-fold t)
+    (setq ido-everywhere t)
+    (setq ido-enable-prefix nil)
+    (setq ido-enable-flex-matching t)
+    (setq ido-create-new-buffer 'always)
+    (setq ido-max-prospects 10)
+    (setq ido-use-faces nil)
+    (add-to-list 'ido-ignore-files "\\.DS_Store")))
+
+(use-package undo-tree
+  :defer t
+  :ensure t
+  :diminish undo-tree-mode
+  :config
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)))
+
 (provide 'personal-settings)
