@@ -1,5 +1,4 @@
 ;;; package --- summary
-
 ;;; Commentary:
 ;; General Settings
 
@@ -27,8 +26,13 @@
 ;; which-key mode
 (which-key-mode 1)
 
+;; display line numbers
+(global-display-line-numbers-mode)
+
 ;; yes to y and no to n
 (defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'list-buffers 'ibuffer-other-window)
+(windmove-default-keybindings)
 
 ;;; No GUI
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
