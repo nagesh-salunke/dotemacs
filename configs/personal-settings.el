@@ -15,6 +15,7 @@
 
 (when window-system (global-hl-line-mode t))
 (set-face-background 'hl-line "black")
+
 (setq ring-bell-function 'ignore)
 (setq scroll-conservatively 100)
 
@@ -39,7 +40,7 @@
   (when (fboundp mode) (funcall mode -1)))
 
 (use-package company
-  :defer t
+  :ensure t
   :diminish company-mode
   :init (add-hook 'after-init-hook 'global-company-mode))
 
@@ -50,7 +51,7 @@
   (beacon-mode))
 
 (use-package ido
-  :defer t
+  :ensure t
   :init (progn (ido-mode 1)
                (ido-everywhere 1))
   :config
@@ -65,7 +66,6 @@
     (add-to-list 'ido-ignore-files "\\.DS_Store")))
 
 (use-package undo-tree
-  :defer t
   :ensure t
   :diminish undo-tree-mode
   :config
@@ -74,4 +74,20 @@
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)))
 
+(use-package rainbow-mode
+  :ensure t
+  :config
+  (rainbow-mode t))
+
+(use-package flycheck
+  :ensure t
+  :config
+    (add-hook 'after-init-hook 'global-flycheck-mode))
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
 (provide 'personal-settings)
+;;; personal-settings.el ends here
