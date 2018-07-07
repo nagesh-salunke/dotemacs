@@ -1,2 +1,2 @@
 # dotemacs
-Repository for emacs configuration.
+Repository for my emacs configuration.
