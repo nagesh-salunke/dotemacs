@@ -15,7 +15,6 @@
 
 (when window-system (global-hl-line-mode t))
 (set-face-background 'hl-line "black")
-
 (setq ring-bell-function 'ignore)
 (setq scroll-conservatively 100)
 
@@ -88,6 +87,16 @@
   :ensure t
   :config
   (yas-global-mode 1))
+
+(use-package hungry-delete
+  :ensure t
+  :config
+  (global-hungry-delete-mode))
+
+(use-package expand-region
+  :ensure t
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
 
 (provide 'personal-settings)
 ;;; personal-settings.el ends here
