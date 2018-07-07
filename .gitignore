@@ -1,0 +1,7 @@
+network-security.data
+elpa/
+*~
+#*
+*#
+elpa_backup/
+custom-settings.el
