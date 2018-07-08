@@ -40,6 +40,8 @@
 
 (global-auto-revert-mode 1) ;; auto-revert changes from disc
 
+(electric-pair-mode 1)
+
 (use-package company
   :diminish company-mode
   :init (add-hook 'after-init-hook 'global-company-mode))
@@ -90,6 +92,22 @@
 (use-package expand-region
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
+
+(use-package magit
+  :config
+  (add-hook 'magit-log-edit-mode-hook 'turn-on-auto-fill)
+  (global-set-key (kbd "C-c g") 'magit-status))
+
+
+(defvar magit-last-seen-setup-instructions "1.4.0")
+
+(use-package git-gutter
+    :init
+  (global-git-gutter-mode +1))
+
+(use-package fullframe
+  :init
+  (fullframe magit-status magit-mode-quit-window nil))
 
 (provide 'personal-settings)
 ;;; personal-settings.el ends here
