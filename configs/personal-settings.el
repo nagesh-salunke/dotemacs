@@ -38,6 +38,8 @@
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
+(global-auto-revert-mode 1) ;; auto-revert changes from disc
+
 (use-package company
   :diminish company-mode
   :init (add-hook 'after-init-hook 'global-company-mode))
