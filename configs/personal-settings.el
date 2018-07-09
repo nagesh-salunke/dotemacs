@@ -4,8 +4,58 @@
 
 ;;; Code:
 
+;;; defaults
+;;Search from home directory
+(setq default-directory "~/")
+
+;;add before save hook
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; create directory recursively if not existing
+(add-hook 'before-save-hook
+          (lambda ()
+             (when buffer-file-name
+               (let ((dir (file-name-directory buffer-file-name)))
+                 (when (and (not (file-exists-p dir))
+                            (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
+                   (make-directory dir t))))))
+
+;; comment/uncomment
+(defun nsalunke/toggle-comment-on-line ()
+  "comment or uncomment current line"
+  (interactive)
+  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+
+(global-set-key (kbd "C-c /")  'nsalunke/toggle-comment-on-line)
+
+;; if not add a new line at end of file
+(setq require-final-newline t)
+
+;; ask before closing emacs
+(setq confirm-kill-emacs 'y-or-n-p)
+
+;; Add file sizes in human-readable units (KB, MB, etc)
+(setq-default dired-listing-switches "-alh")
+
+;; always show code highlight
+(global-font-lock-mode t)
+
+;; Visually indicate matching pairs of parentheses.
+(show-paren-mode t)
+(setq show-paren-delay 0.0)
+
+;;; UI preference
+
+;; No GUI
+(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+  (when (fboundp mode) (funcall mode -1)))
+
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
+
 ;; Theme
 (load-theme 'idea-darkula t)
+;;(load-theme 'solarized-dark t)
 
 ;; Start in full screen mode
 (toggle-frame-fullscreen)
@@ -32,16 +82,32 @@
 ;; yes to y and no to n
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defalias 'list-buffers 'ibuffer-other-window)
+
+;;; should be removed
 (windmove-default-keybindings)
 
-;;; No GUI
-(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
-  (when (fboundp mode) (funcall mode -1)))
-
-(global-auto-revert-mode 1) ;; auto-revert changes from disc
+;; auto-revert changes from disc
+(global-auto-revert-mode 1)
 
 (electric-pair-mode 1)
 
+(defun nsalunke/rename-file-and-buffer ()
+  "Rename the current buffer and file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (message "Buffer is not visiting a file!")
+      (let ((new-name (read-file-name "New name: " filename)))
+        (cond
+         ((vc-backend filename) (vc-rename-file filename new-name))
+         (t
+          (rename-file filename new-name t)
+          (set-visited-file-name new-name t t)))))))
+
+(global-set-key (kbd "C-c r")  'nsalunke/rename-file-and-buffer)
+
+
+;;;company mode
 (use-package company
   :diminish company-mode
   :init (add-hook 'after-init-hook 'global-company-mode))
@@ -98,7 +164,6 @@
   (add-hook 'magit-log-edit-mode-hook 'turn-on-auto-fill)
   (global-set-key (kbd "C-c g") 'magit-status))
 
-
 (defvar magit-last-seen-setup-instructions "1.4.0")
 
 (use-package git-gutter
@@ -108,6 +173,31 @@
 (use-package fullframe
   :init
   (fullframe magit-status magit-mode-quit-window nil))
+
+;;; modeline
+;;; update modeline
+(defmacro diminish-minor-mode (filename mode &optional abbrev)
+  `(eval-after-load (symbol-name ,filename)
+     '(diminish ,mode ,abbrev)))
+
+(defmacro diminish-major-mode (mode-hook abbrev)
+  `(add-hook ,mode-hook
+             (lambda () (setq mode-name ,abbrev))))
+
+(diminish-minor-mode 'abbrev 'abbrev-mode)
+(diminish-minor-mode 'simple 'auto-fill-function)
+(diminish-minor-mode 'company 'company-mode)
+(diminish-minor-mode 'eldoc 'eldoc-mode)
+(diminish-minor-mode 'flycheck 'flycheck-mode)
+(diminish-minor-mode 'flyspell 'flyspell-mode)
+(diminish-minor-mode 'global-whitespace 'global-whitespace-mode)
+(diminish-minor-mode 'projectile 'projectile-mode)
+(diminish-minor-mode 'subword 'subword-mode)
+(diminish-minor-mode 'undo-tree 'undo-tree-mode)
+(diminish-minor-mode 'yasnippet 'yas-minor-mode)
+
+(diminish-major-mode 'emacs-lisp-mode-hook "el")
+(diminish-major-mode 'lisp-interaction-mode-hook "λ")
 
 (provide 'personal-settings)
 ;;; personal-settings.el ends here
