@@ -7,7 +7,7 @@
 ;;; defaults
 ;;Search from home directory
 (setq default-directory "~/")
-
+(setq backup-directory-alist `(("." . "~/.backup")))
 ;;add before save hook
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
