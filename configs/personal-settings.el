@@ -54,8 +54,44 @@
 (setq initial-scratch-message nil)
 
 ;; Theme
-(load-theme 'idea-darkula t)
+(load-theme 'leuven t)
+;;(load-theme 'idea-darkula t)
 ;;(load-theme 'solarized-dark t)
+
+;;mode-line
+(defvar mode-line-cleaner-alist
+  `((auto-complete-mode . " α")
+    (yas-global-mode . " υ")
+    (paredit-mode . " π")
+    (eldoc-mode . "")
+    (git-gutter-mode ."")
+    (abbrev-mode . "")
+    (undo-tree-mode . "UT")
+    (helm-mode . "h")
+    ;; Major modes
+    (lisp-interaction-mode . "λ")
+    (hi-lock-mode . "")
+    (python-mode . "Py")
+    (emacs-lisp-mode . "EL"))
+  "Alist for `clean-mode-line'.
+When you add a new element to the alist, keep in mind that you
+must pass the correct minor/major mode symbol and a string you
+want to use in the modeline *in lieu of* the original.")
+
+
+(defun clean-mode-line ()
+  (interactive)
+  (loop for cleaner in mode-line-cleaner-alist
+        do (let* ((mode (car cleaner))
+                 (mode-str (cdr cleaner))
+                 (old-mode-str (cdr (assq mode minor-mode-alist))))
+             (when old-mode-str
+                 (setcar old-mode-str mode-str))
+               ;; major mode
+             (when (eq mode major-mode)
+               (setq mode-name mode-str)))))
+
+(add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
 ;; Start in full screen mode
 (toggle-frame-fullscreen)
@@ -64,7 +100,7 @@
 (display-time-mode t)
 
 (when window-system (global-hl-line-mode t))
-(set-face-background 'hl-line "black")
+;; (set-face-background 'hl-line "skyblue")
 (setq ring-bell-function 'ignore)
 (setq scroll-conservatively 100)
 
@@ -105,7 +141,16 @@
           (set-visited-file-name new-name t t)))))))
 
 (global-set-key (kbd "C-c r")  'nsalunke/rename-file-and-buffer)
+(global-set-key (kbd "C-x C-i") 'idomenu)
 
+(defun copy-line (arg)
+      "Copy lines (as many as prefix argument) in the kill ring"
+      (interactive "p")
+      (kill-ring-save (line-beginning-position)
+                      (line-beginning-position (+ 1 arg)))
+      (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
+
+(global-set-key "\C-c\C-k" 'copy-line)
 
 ;;;company mode
 (use-package company
@@ -145,8 +190,10 @@
 
 (use-package flycheck
   :config
-    (add-hook 'after-init-hook 'global-flycheck-mode))
-
+  (add-hook 'after-init-hook 'global-flycheck-mode)
+  (setq flycheck-mode-line '(:eval (replace-regexp-in-string
+                                      "FlyC" "𝓕"
+                                      (flycheck-mode-line-status-text)))))
 (use-package yasnippet
   :config
   (yas-global-mode 1))
@@ -162,6 +209,7 @@
 (use-package magit
   :config
   (add-hook 'magit-log-edit-mode-hook 'turn-on-auto-fill)
+  (add-hook 'git-commit-mode-hook 'turn-on-flyspell)
   (global-set-key (kbd "C-c g") 'magit-status))
 
 (defvar magit-last-seen-setup-instructions "1.4.0")
@@ -174,30 +222,45 @@
   :init
   (fullframe magit-status magit-mode-quit-window nil))
 
-;;; modeline
-;;; update modeline
-(defmacro diminish-minor-mode (filename mode &optional abbrev)
-  `(eval-after-load (symbol-name ,filename)
-     '(diminish ,mode ,abbrev)))
+(use-package osx-clipboard
+  :config
+  (osx-clipboard-mode +1))
 
-(defmacro diminish-major-mode (mode-hook abbrev)
-  `(add-hook ,mode-hook
-             (lambda () (setq mode-name ,abbrev))))
+;; from prathamesh-sonpatki's elfeed list
+(defvar elfeed-feeds
+  '(("http://feeds.feedburner.com/2ality" javascript)
+    ("http://oremacs.com/atom.xml" emacs)
+    ("https://facebook.github.io/react/feed.xml" react)
+    ("http://endlessparentheses.com/atom.xml" emacs)
+    ("http://pragmaticemacs.com/feed/" emacs)
+    ("https://www.reddit.com/r/emacs/.rss" emacs)
+    ("http://sachachua.com/blog/category/emacs/feed/" emacs sachachua)
+    ("http://planet.emacsen.org/atom.xml" emacs)
+    ("https://harryrschwartz.com/atom.xml", general)
+    ("http://ergoemacs.org/emacs/blog.xml" emacs)
+    ("http://blog.samaltman.com/posts.atom" general)
+    ("http://feeds.feedburner.com/PlataformaBlog" ruby elixir)
+    ))
+(global-set-key (kbd "C-x w") 'elfeed)
 
-(diminish-minor-mode 'abbrev 'abbrev-mode)
-(diminish-minor-mode 'simple 'auto-fill-function)
-(diminish-minor-mode 'company 'company-mode)
-(diminish-minor-mode 'eldoc 'eldoc-mode)
-(diminish-minor-mode 'flycheck 'flycheck-mode)
-(diminish-minor-mode 'flyspell 'flyspell-mode)
-(diminish-minor-mode 'global-whitespace 'global-whitespace-mode)
-(diminish-minor-mode 'projectile 'projectile-mode)
-(diminish-minor-mode 'subword 'subword-mode)
-(diminish-minor-mode 'undo-tree 'undo-tree-mode)
-(diminish-minor-mode 'yasnippet 'yas-minor-mode)
+;; still trying to understand and use as per my need, will refactor as I use
+(use-package helm
+  :config
+  (helm-mode 1)
+  (helm-adaptive-mode 1)
+  (helm-autoresize-mode 1)
+  (semantic-mode 1)
+  (setq helm-semantic-fuzzy-match t
+      helm-imenu-fuzzy-match t
+      helm-locate-fuzzy-match t
+      helm-apropos-fuzzy-match t
+      helm-lisp-fuzzy-completion t))
 
-(diminish-major-mode 'emacs-lisp-mode-hook "el")
-(diminish-major-mode 'lisp-interaction-mode-hook "λ")
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-c h g") 'helm-google-suggest)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
 (provide 'personal-settings)
 ;;; personal-settings.el ends here

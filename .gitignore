@@ -6,3 +6,6 @@ elpa/
 elpa_backup/
 custom-settings.el
 ido*
+/helm-adaptive-history
+/projectile-bookmarks.eld
+/projectile.cache
