@@ -54,8 +54,8 @@
 (setq initial-scratch-message nil)
 
 ;; Theme
-(load-theme 'leuven t)
-;;(load-theme 'idea-darkula t)
+;; (load-theme 'leuven t)
+(load-theme 'idea-darkula t)
 ;;(load-theme 'solarized-dark t)
 
 ;;mode-line
@@ -236,7 +236,7 @@ want to use in the modeline *in lieu of* the original.")
     ("https://www.reddit.com/r/emacs/.rss" emacs)
     ("http://sachachua.com/blog/category/emacs/feed/" emacs sachachua)
     ("http://planet.emacsen.org/atom.xml" emacs)
-    ("https://harryrschwartz.com/atom.xml", general)
+    ("https://harryrschwartz.com/atom.xml" general)
     ("http://ergoemacs.org/emacs/blog.xml" emacs)
     ("http://blog.samaltman.com/posts.atom" general)
     ("http://feeds.feedburner.com/PlataformaBlog" ruby elixir)
