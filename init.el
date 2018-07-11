@@ -51,3 +51,4 @@
 (add-to-list 'load-path configs-dir)
 (require 'personal-multi-term)
 (require 'personal-settings)
+(require 'personal-org)
