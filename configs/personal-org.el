@@ -129,6 +129,25 @@ Captured %<%Y-%m-%d %H:%M>
 		      ("urgent" .?u)
                       ("inspiration" . ?i)))
 
+;; Shortcuts
+(defvar my/refile-map (make-sparse-keymap))
+
+(defmacro my/defshortcut (key file)
+  `(progn
+     (set-register ,key (cons 'file ,file))
+     (define-key my/refile-map
+       (char-to-string ,key)
+       (lambda (prefix)
+         (interactive "p")
+         (let ((org-refile-targets '(((,file) :maxlevel . 6)))
+               (current-prefix-arg (or current-prefix-arg '(4))))
+           (call-interactively 'org-refile))))))
+
+
+(define-key my/refile-map "," 'my/org-refile-to-previous-in-file)
+
+(my/defshortcut ?o "~/personal/organizer.org")
+
 ;; TODO : add daily work checklist
 ;; TODO : show daily dashboard of checklist and items to do
 ;; TODO : shortcut for work
