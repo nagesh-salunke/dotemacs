@@ -113,7 +113,7 @@ want to use in the modeline *in lieu of* the original.")
 (which-key-mode 1)
 
 ;; display line numbers
-(global-display-line-numbers-mode)
+;;(global-display-line-numbers-mode)
 
 ;; yes to y and no to n
 (defalias 'yes-or-no-p 'y-or-n-p)
