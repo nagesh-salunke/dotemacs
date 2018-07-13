@@ -13,12 +13,13 @@
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda))
 
-(setq org-agenda-files (quote ("~/org"
-                               "~/org/amazon"
-                               "~/org/personal"
-                               "~/org/learn"
-			       "~/org/finance"
-			       "~/org/blogs")))
+(setq org-agenda-files (quote ("~/personal/org/amazon.org"
+                               "~/personal/org/personal.org"
+                               "~/personal/org/learn.org"
+			       "~/personal/org/finance.org"
+			       "~/personal/org/family.org"
+			       "~/personal/org/dailytasks.org"
+			       "~/personal/org/blogs.org")))
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "WAITING(w@/!)" "NEED_DEEP_DIVE(d@/!)" "HOLD(h@/!)" "In Progress(p)" "DONE(d)")
@@ -37,15 +38,6 @@
 (setq org-use-fast-todo-selection t)
 
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-
-(setq org-todo-state-tags-triggers
-      (quote (("CANCELLED" ("CANCELLED" . t))
-              ("WAITING" ("WAITING" . t))
-              ("HOLD" ("WAITING") ("HOLD" . t))
-              (done ("WAITING") ("HOLD"))
-              ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
-              ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
-              ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
 (setq org-directory "~/personal")
 (setq org-default-notes-file "~/personal/organizer.org")
@@ -82,28 +74,17 @@ Captured %<%Y-%m-%d %H:%M>
            :clock-in :clock-resume)
 
 	  ("a" "App idea" entry
-           (file+headline "~/personal/app/appidea.org" "AppIdeas")
+           (file+headline "~/personal/org/app.org" "AppIdeas")
            "* TODO %^{Task}"
            :immediate-finish t)
 
-          ("E" "Energy" table-line
-           (file+headline "~/personal/organizer.org" "Track energy")
-           "| %U | %^{Energy 5-awesome 3-fuzzy 1-zzz} | %^{Note} |"
-           :immediate-finish t
-           )
-
           ("w" "Amazon work task" entry
-           (file+headline "~/personal/amazon/amazonwork.org" "Tasks"),
+           (file+headline "~/personal/org/amazon.org" "UnorganizedTasks"),
 	   my/org-basic-task-template)
 
           ("p" "People task" entry
-           (file+headline "~/personal/people.org" "Tasks")
+           (file+headline "~/personal/org/people.org" "UnorganizedTasks")
            ,my/org-basic-task-template)
-
-          ("j" "Journal entry" plain
-           (file+datetree "~/personal/journal.org")
-           "%K - %a\n%i\n%?\n"
-           :unnarrowed t)
 
 	  ("c" "Protocol Link" entry (file+headline ,org-default-notes-file "Inbox")
            "* [[%:link][%:description]] \n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?\n\nCaptured: %U")
@@ -116,31 +97,25 @@ Captured %<%Y-%m-%d %H:%M>
            (file+headline "~/personal/organizer.org" "Quick notes"))
 
           ("B" "Book" entry
-           (file+datetree "~/personal/books.org" "Inbox")
-           "* %^{Title}  %^g
-  %i
-  *Author(s):* %^{Author} \\\\
-  *ISBN:* %^{ISBN}
+           (file+headline "~/personal/org/books.org" "Book to Read"))
 
-  %?
-
-  *Review on:* %^t \\
-  %a
-  %U"
-           :clock-in :clock-resume)
-
-           ("n" "Daily note" table-line (file+olp "~/personal/organizer.org" "Inbox")
+           ("n" "Daily Notes" table-line (file+olp "~/personal/organizer.org" "Inbox")
             "| %u | %^{Note} |"
             :immediate-finish t)
            ("r" "Notes" entry
-            (file+datetree "~/personal/organizer.org")
+            (file+datetree "~/personal/org/dailynotes.org")
             "* %?\n\n%i\n%U\n"
             )))
 
-(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+(setq org-refile-targets '((nil :maxlevel . 9)
+                                (org-agenda-files :maxlevel . 9)))
+(setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
 
-(ido-mode)
-(setq org-completion-use-ido t)
+(use-package ido
+  :config
+  (ido-mode)
+  (setq org-completion-use-ido t))
 
 (setq org-tag-alist '(("@work" . ?b)
                       ("@home" . ?h)
@@ -151,6 +126,14 @@ Captured %<%Y-%m-%d %H:%M>
                       ("@reading" . ?r)
                       ("@computer" . ?l)
                       ("app" . ?0)
+		      ("urgent" .?u)
                       ("inspiration" . ?i)))
+
+;; TODO : add daily work checklist
+;; TODO : show daily dashboard of checklist and items to do
+;; TODO : shortcut for work
+;; TODO : Habit checklist
+;; TODO : Add daily news checklist
+;; TODO : Add daily reading checklist
 
 (provide 'personal-org)
