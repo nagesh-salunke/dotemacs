@@ -152,6 +152,21 @@ want to use in the modeline *in lieu of* the original.")
 
 (global-set-key "\C-c\C-k" 'copy-line)
 
+;; All The Icons
+(use-package all-the-icons)
+
+;; NeoTree
+(use-package neotree
+  :init
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+
+;; Projectile
+(use-package projectile
+  :init
+  (setq projectile-require-project-root nil)
+  :config
+  (projectile-mode 1))
+
 ;;;company mode
 (use-package company
   :diminish company-mode
