@@ -22,7 +22,7 @@
 			       "~/personal/org/blogs.org")))
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "WAITING(w@/!)" "NEED_DEEP_DIVE(d@/!)" "HOLD(h@/!)" "In Progress(p)" "DONE(d)")
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "WAITING(w@/!)" "NEED_DEEP_DIVE(D@/!)" "HOLD(h@/!)" "In Progress(p)" "DONE(d)")
               (sequence  "|" "CANCELLED(c@/!)" "MEETING"))))
 
 (setq org-todo-keyword-faces
