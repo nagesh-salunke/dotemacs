@@ -106,7 +106,7 @@ want to use in the modeline *in lieu of* the original.")
 
 (set-face-attribute 'default nil
                     :font "Menlo"
-                    :height 200
+                    :height 170
                     :weight 'regular)
 
 ;; which-key mode
