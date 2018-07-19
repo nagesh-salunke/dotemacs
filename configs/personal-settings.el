@@ -255,6 +255,7 @@ want to use in the modeline *in lieu of* the original.")
     ("http://ergoemacs.org/emacs/blog.xml" emacs)
     ("http://blog.samaltman.com/posts.atom" general)
     ("http://feeds.feedburner.com/PlataformaBlog" ruby elixir)
+    ("https://news.ycombinator.com/rss" news)
     ))
 (global-set-key (kbd "C-x w") 'elfeed)
 
