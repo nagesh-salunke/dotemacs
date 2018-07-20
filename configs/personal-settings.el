@@ -241,23 +241,13 @@ want to use in the modeline *in lieu of* the original.")
   :config
   (osx-clipboard-mode +1))
 
-;; from prathamesh-sonpatki's elfeed list
-(defvar elfeed-feeds
-  '(("http://feeds.feedburner.com/2ality" javascript)
-    ("http://oremacs.com/atom.xml" emacs)
-    ("https://facebook.github.io/react/feed.xml" react)
-    ("http://endlessparentheses.com/atom.xml" emacs)
-    ("http://pragmaticemacs.com/feed/" emacs)
-    ("https://www.reddit.com/r/emacs/.rss" emacs)
-    ("http://sachachua.com/blog/category/emacs/feed/" emacs sachachua)
-    ("http://planet.emacsen.org/atom.xml" emacs)
-    ("https://harryrschwartz.com/atom.xml" general)
-    ("http://ergoemacs.org/emacs/blog.xml" emacs)
-    ("http://blog.samaltman.com/posts.atom" general)
-    ("http://feeds.feedburner.com/PlataformaBlog" ruby elixir)
-    ("https://news.ycombinator.com/rss" news)
-    ))
+(use-package elfeed-org
+  :config
+  (elfeed-org)
+  (setq rmh-elfeed-org-files (list "./elfeed.org")))
+
 (global-set-key (kbd "C-x w") 'elfeed)
+
 
 ;; still trying to understand and use as per my need, will refactor as I use
 (use-package helm
