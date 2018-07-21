@@ -244,7 +244,7 @@ want to use in the modeline *in lieu of* the original.")
 (use-package elfeed-org
   :config
   (elfeed-org)
-  (setq rmh-elfeed-org-files (list "./elfeed.org")))
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/configs/elfeed.org")))
 
 (global-set-key (kbd "C-x w") 'elfeed)
 
