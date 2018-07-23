@@ -1,21 +1,24 @@
-* Blogs
+* Blogs       :elffed:
+:PROPERTIES:
+:ID: elfeed
+:END:
 
-* Javascript    :javascript:
-** http://feeds.feedburner.com/2ality
+** Javascript                                                    :javascript:
+*** http://feeds.feedburner.com/2ality
 
-* News
-** https://news.ycombinator.com/rss
+** News
+*** https://news.ycombinator.com/rss
 
-* Other coding and interest
-** https://facebook.github.io/react/feed.xml
-** https://harryrschwartz.com/atom.xml
-** http://blog.samaltman.com/posts.atom
+** Other coding and interest
+*** https://facebook.github.io/react/feed.xml
+*** https://harryrschwartz.com/atom.xml
+*** http://blog.samaltman.com/posts.atom
 
-* Emacs
-** http://oremacs.com/atom.xml
-** http://endlessparentheses.com/atom.xml
-** http://pragmaticemacs.com/feed/
-** https://www.reddit.com/r/emacs/.rss
-** http://sachachua.com/blog/category/emacs/feed/ :sachachua
-** http://planet.emacsen.org/atom.xml
-** http://ergoemacs.org/emacs/blog.xml
+** Emacs
+*** http://oremacs.com/atom.xml
+*** http://endlessparentheses.com/atom.xml
+*** http://pragmaticemacs.com/feed/
+*** https://www.reddit.com/r/emacs/.rss
+*** http://sachachua.com/blog/category/emacs/feed/                :sachachua:
+*** http://planet.emacsen.org/atom.xml
+*** http://ergoemacs.org/emacs/blog.xml
