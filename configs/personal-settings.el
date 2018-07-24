@@ -99,6 +99,11 @@ want to use in the modeline *in lieu of* the original.")
 ;; Display time
 (display-time-mode t)
 
+(use-package anzu)
+(global-anzu-mode +1)
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+
 ;; Emacs server
 (load "server")
 (unless (server-running-p) (server-start))
