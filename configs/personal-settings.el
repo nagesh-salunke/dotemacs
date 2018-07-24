@@ -99,6 +99,10 @@ want to use in the modeline *in lieu of* the original.")
 ;; Display time
 (display-time-mode t)
 
+;; Emacs server
+(load "server")
+(unless (server-running-p) (server-start))
+
 (when window-system (global-hl-line-mode t))
 ;; (set-face-background 'hl-line "skyblue")
 (setq ring-bell-function 'ignore)
