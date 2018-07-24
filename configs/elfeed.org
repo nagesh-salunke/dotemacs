@@ -1,4 +1,4 @@
-* Blogs       :elffed:
+* Blogs
 :PROPERTIES:
 :ID: elfeed
 :END:
