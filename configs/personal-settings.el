@@ -100,7 +100,7 @@ want to use in the modeline *in lieu of* the original.")
 (display-time-mode t)
 
 (use-package multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-c C-c C-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
@@ -262,6 +262,10 @@ want to use in the modeline *in lieu of* the original.")
   :config
   (elfeed-org)
   (setq rmh-elfeed-org-files (list "~/.emacs.d/configs/elfeed.org")))
+
+(use-package elfeed-goodies
+  :config
+  (elfeed-goodies/setup))
 
 (global-set-key (kbd "C-x w") 'elfeed)
 
