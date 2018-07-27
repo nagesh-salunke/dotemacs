@@ -167,6 +167,8 @@ want to use in the modeline *in lieu of* the original.")
   :config
   (projectile-mode 1))
 
+(use-package grep-a-lot)
+
 ;;;company mode
 (use-package company
   :diminish company-mode
