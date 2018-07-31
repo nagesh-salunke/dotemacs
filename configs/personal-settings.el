@@ -179,8 +179,24 @@ want to use in the modeline *in lieu of* the original.")
 (use-package projectile
   :init
   (setq projectile-require-project-root nil)
+  (setq projectile-completion-system 'helm)
+  (setq projectile-indexing-method 'alien)
   :config
-  (projectile-mode 1))
+  (projectile-global-mode 1))
+
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-selector 'helm)
+  :init
+  (dumb-jump-mode))
+
+(defhydra dumb-jump-hydra (:color blue :columns 3)
+    "Dumb Jump"
+    ("n" dumb-jump-go "Go")
+    ("o" dumb-jump-go-other-window "Other window")
+    ("p" dumb-jump-back "Back"))
+
+(global-set-key (kbd "M-g") 'dumb-jump-hydra/body)
 
 (use-package grep-a-lot)
 
