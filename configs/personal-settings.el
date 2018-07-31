@@ -134,6 +134,39 @@ want to use in the modeline *in lieu of* the original.")
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defalias 'list-buffers 'ibuffer-other-window)
 
+;; ibuffer config
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+	       ("dired" (mode . dired-mode))
+	       ("org" (name . "^.*org$"))
+	       ("web" (or (mode . web-mode) (mode . js2-mode)))
+	       ("shell" (or (mode . term-mode) (mode . shell-mode)))
+	       ("mu4e" (name . "\*mu4e\*"))
+	       ("programming" (or
+			       (mode . python-mode)
+			       (mode . java-mode)
+			       (mode . c++-mode)))
+	       ("magit" (or
+			 (mode . magit-mode)
+			 (mode . magit-status-mode)
+			 (name . "$*magit*$")))
+	       ("emacs" (or
+			 (name . "^\\*scratch\\*$")
+			 (name . "^\\*Messages\\*$")
+			 (mode . emacs-lisp-mode)))
+	       ))))
+(add-hook 'ibuffer-mode-hook
+	  (lambda ()
+	    (ibuffer-auto-mode 1)
+	    (ibuffer-switch-to-saved-filter-groups "default")))
+
+;; Don't show filter groups if there are no buffers in that group
+(setq ibuffer-show-empty-filter-groups nil)
+
+;; Don't ask for confirmation to delete marked buffers
+(setq ibuffer-expert t)
+
+
 ;;; should be removed
 (windmove-default-keybindings)
 
