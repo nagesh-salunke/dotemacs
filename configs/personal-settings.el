@@ -157,6 +157,7 @@ want to use in the modeline *in lieu of* the original.")
 			 (name . "^\\*scratch\\*$")
 			 (name . "^\\*Messages\\*$")
 			 (mode . emacs-lisp-mode)))
+	       ("grep"	 (mode . grep-mode))
 	       ))))
 (add-hook 'ibuffer-mode-hook
 	  (lambda ()
