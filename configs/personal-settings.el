@@ -148,6 +148,9 @@ want to use in the modeline *in lieu of* the original.")
 			       (mode . c++-mode)))
 	       ("magit" (or
 			 (mode . magit-mode)
+			 (mode . magit-process-mode)
+			 (mode . magit-diff-mode)
+			 (mode . magit-revision-mode)
 			 (mode . magit-status-mode)
 			 (name . "$*magit*$")))
 	       ("emacs" (or
