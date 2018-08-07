@@ -19,6 +19,7 @@
 			       "~/personal/org/finance.org"
 			       "~/personal/org/family.org"
 			       "~/personal/org/dailytasks.org"
+			       "~/personal/org/gcal.org"
 			       "~/personal/org/blogs.org")))
 
 (setq org-todo-keywords
@@ -63,7 +64,10 @@ Captured %<%Y-%m-%d %H:%M>
            (file+headline "~/personal/organizer.org" "Inbox"),
 	   my/org-basic-task-template)
 
-          ("T" "Quick task" entry
+	  ("a" "Appointment" entry (file  "~/personal/org/gcal.org" )
+	 "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+
+	  ("T" "Quick task" entry
            (file+headline "~/personal/organizer.org" "Inbox")
            "* TODO %^{Task}\nSCHEDULED: %t\n"
            :immediate-finish t)
@@ -73,7 +77,7 @@ Captured %<%Y-%m-%d %H:%M>
            "* STARTED %^{Task}"
            :clock-in :clock-resume)
 
-	  ("a" "App idea" entry
+	  ("I" "App idea" entry
            (file+headline "~/personal/org/app.org" "AppIdeas")
            "* TODO %^{Task}"
            :immediate-finish t)
@@ -147,6 +151,30 @@ Captured %<%Y-%m-%d %H:%M>
 (define-key my/refile-map "," 'my/org-refile-to-previous-in-file)
 
 (my/defshortcut ?o "~/personal/organizer.org")
+
+(use-package calfw
+  :ensure ;TODO:
+  :config
+  (require 'calfw)
+  (require 'calfw-org)
+  (setq cfw:org-overwrite-default-keybinding t)
+  (require 'calfw-ical)
+
+  (defun mycalendar ()
+    (interactive)
+    (cfw:open-calendar-buffer
+     :contents-sources
+     (list
+      ;; (cfw:org-create-source "Green")  ; orgmode source
+      (cfw:ical-create-source "gcal" "https://somecalnedaraddress" "IndianRed") ; devorah calender
+      (cfw:ical-create-source "gcal" "https://anothercalendaraddress" "IndianRed") ; google calendar ICS
+      )))
+  (setq cfw:org-overwrite-default-keybinding t))
+
+(use-package calfw-gcal
+	:ensure t
+	:config
+	(require 'calfw-gcal))
 
 ;; TODO : add daily work checklist
 ;; TODO : show daily dashboard of checklist and items to do
