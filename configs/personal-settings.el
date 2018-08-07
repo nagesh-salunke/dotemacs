@@ -100,7 +100,7 @@ want to use in the modeline *in lieu of* the original.")
 (display-time-mode t)
 
 (use-package multiple-cursors)
-(global-set-key (kbd "C-c C-c C-c") 'mc/edit-lines)
+(global-set-key (kbd "C-x C-d") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
@@ -170,6 +170,20 @@ want to use in the modeline *in lieu of* the original.")
 ;; Don't ask for confirmation to delete marked buffers
 (setq ibuffer-expert t)
 
+(setq org-agenda-custom-commands
+      '(("c" "Simple agenda view"
+	 ((agenda "")
+	  (alltodo "")))))
+
+;;; calendar
+(use-package org-gcal
+  :config
+  (setq org-gcal-client-id "..."
+	org-gcal-client-secret "..."
+	org-gcal-file-alist '(("salunkenagesh14@gmail.com" .  "~/personal/org/gcal.org"))))
+
+(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 
 ;;; should be removed
 (windmove-default-keybindings)
