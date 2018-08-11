@@ -201,7 +201,7 @@ Why would someone want to close emacs ?
 *** Theme and font
 Theme - I keep changing themes.
 #+BEGIN_SRC emacs-lisp
-(load-theme 'nimbus t)
+(load-theme 'idea-darkula t)
 #+END_SRC
 
 Font
@@ -212,68 +212,26 @@ Font
                     :weight 'regular)
 #+END_SRC
 *** Modeline
-**** Spaceline
-from the spacemacs, the theme and their modified powerline setup.
-
-alternate, arrow, arrow-fade, bar, box, brace,
-   butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag,
-   utf-8.
-
+**** Spaceline with  icons
 #+BEGIN_SRC emacs-lisp
-  (use-package spaceline
-    :ensure t
-    :config
-    (require 'spaceline-config)
-      (setq spaceline-buffer-encoding-abbrev-p nil)
-      (spaceline-toggle-buffer-size-off)
-      (spaceline-toggle-buffer-position-off)
-      (spaceline-toggle-buffer-modified-off)
-      (spaceline-emacs-theme))
-(setq powerline-default-separator (quote arrow))
-(setq display-time-default-load-average nil)
-(setq line-number-mode t)
-(setq column-number-mode t)
+(use-package spaceline-all-the-icons :after spaceline
+  :ensure t
+  :load-path "~/.emacs.d/spaceline-all-the-icons.el")
+(use-package spaceline :after powerline
+  :ensure t
+  :config (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati)))))
+(spaceline-all-the-icons-theme)
 #+END_SRC
-
-**** Cursor position
-  Show the current line and column for your cursor.
-  #+BEGIN_SRC emacs-lisp
-    (setq line-number-mode t)
-    (setq column-number-mode t)
-  #+END_SRC
-
-**** Clock
-***** Time format
-  #+BEGIN_SRC emacs-lisp
-    (setq display-time-24hr-format t)
-    (setq display-time-format "%H:%M - %d %B %Y")
-  #+END_SRC
-
-***** Enabling the mode
-  This turns on the clock globally.
-  #+BEGIN_SRC emacs-lisp
-    (display-time-mode 1)
-  #+END_SRC
-
-**** Battery indicator
-  A package called =fancy-battery= will be used if we are in GUI emacs, otherwise the built in battery-mode will be used.
-  #+BEGIN_SRC emacs-lisp
-;;    (use-package fancy-battery
-;;      :ensure t
-;;      :config
-;;	(setq fancy-battery-show-percentage t)
-;;	(setq battery-update-interval 15)
-;;	(if window-system
-;;          (fancy-battery-mode)
-;;          (display-battery-mode)))
-  #+END_SRC
-
-**** Diminish
+**** fancy battery
 #+BEGIN_SRC emacs-lisp
-(use-package diminish
-       :diminish which-key-mode
-       :diminish eldoc-mode
-       :diminish auto-revert-mode)
+(use-package fancy-battery
+      :ensure t
+      :config
+	(setq fancy-battery-show-percentage t)
+	(setq battery-update-interval 15)
+	(if window-system
+          (fancy-battery-mode)
+          (display-battery-mode)))
 #+END_SRC
 *** Buffer Management
 **** ibuffer
@@ -529,6 +487,22 @@ From : https://www.reddit.com/r/emacs/comments/3f55nm/how_to_remove_2_first_dot_
   (add-hook 'after-init-hook 'global-flycheck-mode))
 #+END_SRC
 
+*** Ido
+#+BEGIN_SRC emacs-lisp
+(use-package ido
+  :defer t
+  :init (progn (ido-mode 1)
+               (ido-everywhere 1))
+  :config
+  (progn
+    (setq ido-case-fold t)
+    (setq ido-everywhere t)
+    (setq ido-enable-prefix nil)
+    (setq ido-enable-flex-matching t)
+    (setq ido-create-new-buffer 'always)
+    (setq ido-max-prospects 10)
+    (setq ido-use-faces nil)))
+#+END_SRC
 *** Kill word
 
 Kills word your cursor is on.
@@ -1308,5 +1282,7 @@ Captured %<%Y-%m-%d %H:%M>
 ** Weather
 
 #+begin_src emacs-lisp
-  (use-package forecast)
+  (use-package yahoo-weather
+    :config
+    (yahoo-weather-mode t))
 #+end_src
