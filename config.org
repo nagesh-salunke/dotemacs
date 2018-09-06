@@ -201,7 +201,7 @@ Why would someone want to close emacs ?
 *** Theme and font
 Theme - I keep changing themes.
 #+BEGIN_SRC emacs-lisp
-(load-theme 'idea-darkula t)
+(load-theme 'zeno t)
 #+END_SRC
 
 Font
@@ -1484,22 +1484,11 @@ Org has a whole bunch of optional modules. I plan to learn one by one.
 #+BEGIN_SRC emacs-lisp
   (setq org-modules '(org-bbdb
                       org-gnus
-                      org-drill
-                      org-info
-                      org-jsinfo
                       org-habit
                       org-irc
                       org-mouse
                       org-protocol
-                      org-annotate-file
-                      org-eval
-                      org-expiry
-                      org-interactive-query
-                      org-man
-                      org-collector
-                      org-panel
-                      org-screen
-                      org-toc))
+                      toc-org))
 (eval-after-load 'org
  '(org-load-modules-maybe t))
 ;; Prepare stuff for org-export-backends
