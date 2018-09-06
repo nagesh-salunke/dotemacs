@@ -140,74 +140,12 @@
                  'display '(raise 0.2))
      (propertize (format " %s" branch) 'face `(:height 0.9 :inherit) 'display '(raise 0.2)))))
 
-(defun spaceline---svn-vc ()
-  "Function to return the Spaceline formatted SVN Version Control text."
-  (let ((revision (cadr (split-string vc-mode "-"))))
-    (concat
-     (propertize (format " %s" (all-the-icons-faicon "cloud")) 'face `(:height 1.2) 'display '(raise -0.1))
-     (propertize (format " · %s" revision) 'face `(:height 0.9)))))
-
-
 (spaceline-define-segment
     ati-vc-icon "An `all-the-icons' segment for the current Version Control icon"
     (when vc-mode
       (cond ((string-match "Git[:-]" vc-mode) (spaceline---github-vc))
-            ((string-match "SVN-" vc-mode) (spaceline---svn-vc))
             (t (propertize (format "%s" vc-mode)))))
     :when active)
-
-(spaceline-define-segment
-    ati-flycheck-status "An `all-the-icons' representaiton of `flycheck-status'"
-    (let* ((text
-            (pcase flycheck-last-status-change
-              (`finished (if flycheck-current-errors
-                             (let ((count (let-alist (flycheck-count-errors flycheck-current-errors)
-                                            (+ (or .warning 0) (or .error 0)))))
-                               (format "✖ %s Issue%s" count (if (eq 1 count) "" "s")))
-                           "✔ No Issues"))
-              (`running     "⟲ Running")
-              (`no-checker  "⚠ No Checker")
-              (`not-checked "✖ Disabled")
-              (`errored     "⚠ Error")
-              (`interrupted "⛔ Interrupted")
-              (`suspicious  "")))
-           (f (cond
-               ((string-match "⚠" text) `(:height 0.9 :foreground ,(face-attribute 'spaceline-flycheck-warning :foreground)))
-               ((string-match "✖ [0-9]" text) `(:height 0.9 :foreground ,(face-attribute 'spaceline-flycheck-error :foreground)))
-               ((string-match "✖ Disabled" text) `(:height 0.9 :foreground ,(face-attribute 'font-lock-comment-face :foreground)))
-               (t '(:height 0.9 :inherit)))))
-      (propertize (format "%s" text)
-                  'face f
-                  'help-echo "Show Flycheck Errors"
-                  'display '(raise 0.2)
-                  'mouse-face '(:box 1)
-                  'local-map (make-mode-line-mouse-map 'mouse-1 (lambda () (interactive) (flycheck-list-errors)))))
-    :when active :tight t )
-
-(defvar spaceline--upgrades nil)
-(defun spaceline--count-upgrades ()
-  "Function to count the number of package upgrades needed."
-  (let ((buf (current-buffer)))
-    (package-list-packages-no-fetch)
-    (with-current-buffer "*Packages*"
-      (setq spaceline--upgrades (length (package-menu--find-upgrades))))
-    (switch-to-buffer buf)))
-(advice-add 'package-menu-execute :after 'spaceline--count-upgrades)
-
-(spaceline-define-segment
-    ati-package-updates "An `all-the-icons' spaceline segment to indicate number of package updates needed"
-    (let ((num (or spaceline--upgrades (spaceline--count-upgrades))))
-      (propertize
-       (concat
-        (propertize (format "%s" (all-the-icons-octicon "package"))
-                    'face `(:family ,(all-the-icons-octicon-family) :height 1.1 :inherit)
-                    'display '(raise 0.1))
-        (propertize (format " %d updates " num) 'face `(:height 0.9 :inherit) 'display '(raise 0.2)))
-       'help-echo "Open Packages Menu"
-       'mouse-face '(:box 1)
-       'local-map (make-mode-line-mouse-map
-                   'mouse-1 (lambda () (interactive) (package-list-packages)))))
-    :when (and active (> (or spaceline--upgrades (spaceline--count-upgrades)) 0)))
 
 ;;---------------------;;
 ;; Right First Segment ;;
@@ -268,11 +206,6 @@
     ati-height-modifier "Modifies the height of inactive buffers"
     (propertize " " 'face '(:height 1.3 :inherit))
     :tight t :when (not active))
-
-(spaceline-define-segment
-    ati-buffer-size "Buffer Size"
-    (propertize (format-mode-line "%I") 'face `(:height 0.9 :inherit) 'display '(raise 0.1))
-    :tight t)
 
 (spaceline-define-segment
     ati-battery-status "Show battery information"
@@ -353,15 +286,14 @@ the directions of the separator."
 (spaceline-compile
  "ati"
  '(
-   ((ati-modified ati-window-numbering ati-buffer-size) :face highlight-face :skip-alternate t)
+   ((ati-modified ati-window-numbering) :face highlight-face :skip-alternate t)
    ;; left-active-3
    ati-left-1-separator
    ((ati-projectile ati-mode-icon ati-buffer-id) :face default-face)
    ati-left-2-separator
-   ((ati-process ati-position ati-region-info) :face highlight-face :separator " | ")
+   ((ati-position ati-region-info) :face highlight-face :separator " | ")
    ati-left-3-separator
    ati-left-inactive-separator
-   ((ati-vc-icon ati-flycheck-status ati-package-updates purpose) :separator " · " :face other-face)
    ati-left-4-separator)
 
  '(ati-right-1-separator
@@ -371,7 +303,7 @@ the directions of the separator."
    ((ati-battery-status ati-time) :separator " | " :face other-face)
    ))
 
-;; (setq mode-line-format '("%e" (:eval (spaceline-ml-main))))
+(setq mode-line-format '("%e" (:eval (spaceline-ml-main))))
 
 (provide 'spaceline-all-the-icons)
 ;;; spaceline-all-the-icons.el ends here
