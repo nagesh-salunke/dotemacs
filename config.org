@@ -336,9 +336,9 @@ Simply pressing =Control-c r= will reload this file, very handy.
 You can also manually invoke =config-reload=.
 #+BEGIN_SRC emacs-lisp
   (defun config-reload ()
-    "Reloads ~/.emacs.d/config.org at runtime"
+    "Reloads ~/.emacs.d/init.el at runtime"
     (interactive)
-    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+    (org-babel-load-file (expand-file-name "~/.emacs.d/init.el")))
   (global-set-key (kbd "C-c y") 'config-reload)
 #+END_SRC
 
