@@ -2001,12 +2001,12 @@ Sorting
 
 #+END_SRC
 
-I like looking at 4 days at a time when I plan using the Org agenda.
+I like looking at 7 days at a time when I plan using the Org agenda.
 I want to see my log entries, but I don’t want to see scheduled items that I’ve finished.
 I like seeing a time grid so that I can get a sense of how appointments are spread out.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-agenda-span 4)
+(setq org-agenda-span 7)
 (setq org-agenda-tags-column -100) ; take advantage of the screen width
 (setq org-agenda-sticky nil)
 (setq org-agenda-inhibit-startup t)
@@ -2026,7 +2026,7 @@ I like seeing a time grid so that I can get a sense of how appointments are spre
 
 Start week on Sunday
 #+BEGIN_SRC emacs-lisp
-(setq org-agenda-start-on-weekday 7)
+(setq org-agenda-start-on-weekday 1)
 #+END_SRC
 
 **** Display projects with associated subtasks
