@@ -42,6 +42,7 @@ I plan to keep a list of things from where I learnt emacs over here
 
 #+begin_src emacs-lisp
 ;; This sets up the load path so that we can override it
+(add-to-list 'load-path "~/elisp")
 (package-initialize)
 ;;; configure use package
 (unless (package-installed-p 'use-package)
@@ -1468,7 +1469,7 @@ Useful, has more details than just popup, saves time  to visit the code reposito
  |               |                               | Income                | Income sources                                      |
  | journal       | ~/personal/org/journal.org    | Journal               |                                                     |
  | learn         | ~/personal/org/learn.org      | <Categories>          | Learning for each categories, tasks and notes       |
- | people        | ~/personal/org/people.org     | Contact               |                                                     |
+ | people        | ~/personal/org/contacts.org   | Contact               |                                                     |
  |               |                               | Inspirational People  |                                                     |
  | personal      | ~/personal/org/personal.org   | Personal Improvements | personal improvements tasks                         |
  |               |                               | Personal Work         | personal work items                                 |
@@ -1484,11 +1485,22 @@ Org has a whole bunch of optional modules. I plan to learn one by one.
 #+BEGIN_SRC emacs-lisp
   (setq org-modules '(org-bbdb
                       org-gnus
+                      org-drill
+                      org-info
+                      org-jsinfo
                       org-habit
                       org-irc
                       org-mouse
                       org-protocol
-                      toc-org))
+                      org-annotate-file
+                      org-eval
+                      org-expiry
+                      org-interactive-query
+                      org-man
+                      org-collector
+                      org-panel
+                      org-screen
+                      org-toc))
 (eval-after-load 'org
  '(org-load-modules-maybe t))
 ;; Prepare stuff for org-export-backends
