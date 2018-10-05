@@ -851,18 +851,53 @@ point reaches the beginning or end of the buffer, stop there."
 (setq mu4e-mu-binary "/usr/local/bin/mu")
 (setq mu4e-maildir "~/Mail")
 
+(setq mu4e-contexts
+    `( ,(make-mu4e-context
+          :name "Personal"
+          :enter-func (lambda () (mu4e-message "Entering Personal context"))
+          :leave-func (lambda () (mu4e-message "Leaving Personal context"))
+          :match-func (lambda (msg)
+                        (when msg
+                          (mu4e-message-contact-field-matches msg
+                            :to "salunkenagesh14@gmail.com")))
+          :vars '( ( user-mail-address      . "salunkenagesh14@gmail.com"  )
+                   ( user-full-name         . "Nagesh Salunke" )
+		   ( smtpmail-stream-type . starttls )
+		   ( smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)) )
+		   ( smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "salunkenagesh14@gmail.com" nil)) )
+		   ( smtpmail-default-smtp-server . "smtp.gmail.com" )
+		   ( smtpmail-smtp-server . "smtp.gmail.com" )
+		   ( smtpmail-smtp-service . 587 )
+                   ( mu4e-compose-signature .
+                     (concat
+                       "Nagesh Salunke\n"
+                       "https://nageshrsalunke.me\n"))))
+
+       ,(make-mu4e-context
+          :name "Work"
+          :enter-func (lambda () (mu4e-message "Switch to the Work context"))
+          ;; this matches maildir /Amazon and its sub-directories
+          :match-func (lambda (msg)
+                        (when msg
+                          (string-match-p "^/Amazon" (mu4e-message-field msg :maildir))))
+          :vars '( ( user-mail-address       . "nsalunke@amazon.com" )
+                   ( user-full-name          . "Nagesh Salunke" )
+		   ( smtpmail-default-smtp-server . "ballard.amazon.com" )
+		   ( smtpmail-local-domain . "amazon.com" )
+		   ( smtpmail-smtp-user . "ANT\\nsalunke" )
+		   ( smtpmail-smtp-server.  "ballard.amazon.com" )
+		   ( smtpmail-stream-type . 'starttls)
+		   ( smtpmail-smtp-service . 1587 )
+                   ( mu4e-compose-signature  .
+                     (concat
+                       "Nagesh Salunke\n"
+                       "Periodicals Tech\n"))))))
+
 (setq mu4e-sent-folder "/Amazon/Sent Items"
       mu4e-drafts-folder "/Amazon/Drafts"
-      mu4e-trash-folder  "/Amazon/Deleted Items"
-      user-mail-address "nsalunke@amazon.com"
-      smtpmail-default-smtp-server "ballard.amazon.com"
-      smtpmail-local-domain "amazon.com"
-      smtpmail-smtp-user "ANT\\nsalunke"
-      smtpmail-smtp-server "ballard.amazon.com"
-      smtpmail-stream-type 'starttls
-      smtpmail-smtp-service 1587)
+      mu4e-trash-folder  "/Amazon/Deleted Items")
 
-(setq mu4e-get-mail-command "fish;offlineimap"
+(setq mu4e-get-mail-command "/usr/local/bin/offlineimap"
       send-mail-function 'smtpmail-send-it
       message-kill-buffer-on-exit t)
 
