@@ -202,7 +202,7 @@ Why would someone want to close emacs ?
 *** Theme and font
 Theme - I keep changing themes.
 #+BEGIN_SRC emacs-lisp
-(load-theme 'zeno t)
+;;(load-theme 'zeno t)
 #+END_SRC
 
 Font
@@ -214,26 +214,26 @@ Font
 #+END_SRC
 *** Modeline
 **** Spaceline with  icons
-#+BEGIN_SRC emacs-lisp
-(use-package spaceline-all-the-icons :after spaceline
-  :ensure t
-  :load-path "~/.emacs.d/spaceline-all-the-icons.el")
-(use-package spaceline :after powerline
-  :ensure t
-  :config (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati)))))
-(spaceline-all-the-icons-theme)
-#+END_SRC
+;;#+BEGIN_SRC emacs-lisp
+;;(use-package spaceline-all-the-icons :after spaceline
+;;  :ensure t
+;;  :load-path "~/.emacs.d/spaceline-all-the-icons.el")
+;;(use-package spaceline :after powerline
+;;  :ensure t
+;;  :config (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati)))))
+;;(spaceline-all-the-icons-theme)
+;;#+END_SRC
 **** fancy battery
-#+BEGIN_SRC emacs-lisp
-(use-package fancy-battery
-      :ensure t
-      :config
-	(setq fancy-battery-show-percentage t)
-	(setq battery-update-interval 15)
-	(if window-system
-          (fancy-battery-mode)
-          (display-battery-mode)))
-#+END_SRC
+;;#+BEGIN_SRC emacs-lisp
+;;(use-package fancy-battery
+;;      :ensure t
+;;      :config
+;;	(setq fancy-battery-show-percentage t)
+;;	(setq battery-update-interval 15)
+;;	(if window-system
+;;          (fancy-battery-mode)
+;;          (display-battery-mode)))
+;;#+END_SRC
 *** Buffer Management
 **** ibuffer
 
