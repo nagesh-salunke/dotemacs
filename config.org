@@ -841,6 +841,62 @@ point reaches the beginning or end of the buffer, stop there."
 #+end_src
 
 ** Email
+*** mu4e
+
+#+BEGIN_SRC emacs-lisp
+;; make sure mu4e is in your load-path
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+(require 'mu4e)
+(require 'smtpmail)
+(setq mu4e-mu-binary "/usr/local/bin/mu")
+(setq mu4e-maildir "~/Mail")
+
+(setq mu4e-sent-folder "/Amazon/Sent Items"
+      mu4e-drafts-folder "/Amazon/Drafts"
+      mu4e-trash-folder  "/Amazon/Deleted Items"
+      user-mail-address "nsalunke@amazon.com"
+      smtpmail-default-smtp-server "ballard.amazon.com"
+      smtpmail-local-domain "amazon.com"
+      smtpmail-smtp-user "ANT\\nsalunke"
+      smtpmail-smtp-server "ballard.amazon.com"
+      smtpmail-stream-type 'starttls
+      smtpmail-smtp-service 1587)
+
+(setq mu4e-get-mail-command "fish;offlineimap"
+      send-mail-function 'smtpmail-send-it
+      message-kill-buffer-on-exit t)
+
+(defun my-mu4e-html2text (msg)
+  "My html2text function; shows short message inline, show
+long messages in some external browser (see `browse-url-generic-program')."
+  (let ((html (or (mu4e-message-field msg :body-html) "")))
+    (if (> (length html) 20000)
+      (progn
+        (mu4e-action-view-in-browser msg)
+        "[Viewing message in external browser]")
+      (mu4e-shr2text msg))))
+
+(setq mu4e-html2text-command 'my-mu4e-html2text)
+
+ (setq mu4e-html2text-command
+       "textutil -stdin -format html -convert txt -stdout")
+;;(setq mu4e-html2text-command "w3m -T text/html")
+
+;; you can quickly switch to your Inbox -- press ja
+(setq mu4e-maildir-shortcuts
+      '(("/Amazon/INBOX"               . ?a)
+      '(("/Amazon/Sent Items"               . ?s)
+      ;; Add others if needed.
+       ))
+;; http://www.djcbsoftware.nl/code/mu/mu4e/Bookmarks.html
+;; Add new bookmarks to searches -- press br
+(add-to-list 'mu4e-bookmarks
+	     '("from:pipelines or from:p4admin"
+	       "Trash to Delete"
+	       ?r))
+(global-set-key (kbd "C-x m") 'mu4e)
+#+END_SRC
+
 ** Hydras
 Finding it very useful.
 #+BEGIN_SRC emacs-lisp
