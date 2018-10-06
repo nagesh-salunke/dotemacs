@@ -50,6 +50,7 @@ I plan to keep a list of things from where I learnt emacs over here
   (package-install 'use-package))
 (setq use-package-verbose t)
 (setq use-package-always-ensure t)
+(add-to-list 'exec-path "/usr/local/bin")
 #+END_SRC
 
 ** Personal Details
@@ -1367,6 +1368,12 @@ This makes it easier to add links from outside.
 (global-set-key (kbd "<f6>") 'my/yank-more)
 #+end_src
 
+#+BEGIN_SRC emacs-lisp
+;;store org-mode links to messages
+(require 'org-mu4e)
+;;store link to message if in header view, not to header query
+(setq org-mu4e-link-query-in-headers-mode nil)
+#+END_SRC
 **** Org Capture templates
 
    #+BEGIN_SRC emacs-lisp
