@@ -50,7 +50,9 @@ I plan to keep a list of things from where I learnt emacs over here
   (package-install 'use-package))
 (setq use-package-verbose t)
 (setq use-package-always-ensure t)
-(add-to-list 'exec-path "/usr/local/bin")
+(setq org-enable-table-editor nil)
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
 #+END_SRC
 
 ** Personal Details
@@ -846,7 +848,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 #+BEGIN_SRC emacs-lisp
 ;; make sure mu4e is in your load-path
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
 (require 'mu4e)
 (require 'smtpmail)
 (setq mu4e-mu-binary "/usr/local/bin/mu")
@@ -923,7 +925,7 @@ long messages in some external browser (see `browse-url-generic-program')."
       '(("/Amazon/INBOX"               . ?a)
       '(("/Amazon/Sent Items"               . ?s)
       ;; Add others if needed.
-       ))
+       )))
 ;; http://www.djcbsoftware.nl/code/mu/mu4e/Bookmarks.html
 ;; Add new bookmarks to searches -- press br
 (add-to-list 'mu4e-bookmarks
