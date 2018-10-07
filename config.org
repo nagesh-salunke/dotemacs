@@ -923,7 +923,7 @@ long messages in some external browser (see `browse-url-generic-program')."
 ;; you can quickly switch to your Inbox -- press ja
 (setq mu4e-maildir-shortcuts
       '(("/Amazon/INBOX"               . ?a)
-      '(("/Amazon/Sent Items"               . ?s)
+      ("/Amazon/Sent Items"               . ?s)
       ;; Add others if needed.
        )))
 ;; http://www.djcbsoftware.nl/code/mu/mu4e/Bookmarks.html
