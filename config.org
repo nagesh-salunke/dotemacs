@@ -408,6 +408,7 @@ Dont just search - swipe
   (recenter)
   )
 (advice-add 'swiper :after #'bjm-swiper-recenter)
+(global-set-key (kbd "C-c u") 'swiper-all)
 #+END_SRC
 
 *** Multiple cursors
