@@ -471,7 +471,7 @@ Interactive completion for various things.
 
    (require 'helm-config)
    (helm-autoresize-mode 1)
-
+(setq helm-split-window-in-side-p t)
  #+END_SRC
 
  Remove first and second line from buffer to save space as  C-l serves the purpose.
