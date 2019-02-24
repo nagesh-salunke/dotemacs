@@ -212,7 +212,7 @@ Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil
                     :font "Menlo"
-                    :height 170
+                    :height 110
                     :weight 'regular)
 #+END_SRC
 *** Modeline
@@ -619,21 +619,21 @@ Scroll conservatively, easy on eyes.
 
 Dumb jump to move around and back.
 #+BEGIN_SRC emacs-lisp
-(use-package dumb-jump
-  :diminish dumb-jump-mode
-  :config
-  (setq dumb-jump-selector 'helm)
-  :init
-  (dumb-jump-mode))
-
-(defhydra dumb-jump-hydra (:color blue :columns 3)
-    "Dumb Jump"
-    ("n" dumb-jump-go "Go")
-    ("o" dumb-jump-go-other-window "Other window")
-    ("p" dumb-jump-back "Back"))
-
-(global-set-key (kbd "M-g") 'dumb-jump-hydra/body)
-
+;;(use-package dumb-jump
+;;  :diminish dumb-jump-mode
+;;  :config
+;;  (setq dumb-jump-selector 'helm)
+;;  :init
+;;  (dumb-jump-mode))
+;;
+;;(defhydra dumb-jump-hydra (:color blue :columns 3)
+;;    "Dumb Jump"
+;;    ("n" dumb-jump-go "Go")
+;;    ("o" dumb-jump-go-other-window "Other window")
+;;    ("p" dumb-jump-back "Back"))
+;;
+;;(global-set-key (kbd "M-g") 'dumb-jump-hydra/body)
+;;
 #+END_SRC
 *** Auto revert from disc
 *** Grep a lot
@@ -782,7 +782,12 @@ Ace window numbers window when there are more than 2 windows.
 #+END_SRC
 
 *** Dired
-*** helm-swoop - easy search in buffers
+*** helm-swoop - easy search in buff
+
+
+
+
+ers
 Easiest Way to search for a buffer or between multiple buffers.
 #+BEGIN_SRC emacs-lisp
 (use-package helm-swoop
@@ -847,10 +852,10 @@ point reaches the beginning or end of the buffer, stop there."
 ** Email
 *** mu4e
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp-not-not-enabled
 ;; make sure mu4e is in your load-path
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
-(require 'mu4e)
+;;(require 'mu4e)
 (require 'smtpmail)
 (setq mu4e-mu-binary "/usr/local/bin/mu")
 (setq mu4e-maildir "~/Mail")
@@ -875,31 +880,7 @@ point reaches the beginning or end of the buffer, stop there."
                    ( mu4e-compose-signature .
                      (concat
                        "Nagesh Salunke\n"
-                       "https://nageshrsalunke.me\n"))))
-
-       ,(make-mu4e-context
-          :name "Work"
-          :enter-func (lambda () (mu4e-message "Switch to the Work context"))
-          ;; this matches maildir /Amazon and its sub-directories
-          :match-func (lambda (msg)
-                        (when msg
-                          (string-match-p "^/Amazon" (mu4e-message-field msg :maildir))))
-          :vars '( ( user-mail-address       . "nsalunke@amazon.com" )
-                   ( user-full-name          . "Nagesh Salunke" )
-		   ( smtpmail-default-smtp-server . "ballard.amazon.com" )
-		   ( smtpmail-local-domain . "amazon.com" )
-		   ( smtpmail-smtp-user . "ANT\\nsalunke" )
-		   ( smtpmail-smtp-server.  "ballard.amazon.com" )
-		   ( smtpmail-stream-type . 'starttls)
-		   ( smtpmail-smtp-service . 1587 )
-                   ( mu4e-compose-signature  .
-                     (concat
-                       "Nagesh Salunke\n"
-                       "Periodicals Tech\n"))))))
-
-(setq mu4e-sent-folder "/Amazon/Sent Items"
-      mu4e-drafts-folder "/Amazon/Drafts"
-      mu4e-trash-folder  "/Amazon/Deleted Items")
+                       "https://nageshrsalunke.me\n"))))))
 
 (setq mu4e-get-mail-command "/usr/local/bin/offlineimap"
       send-mail-function 'smtpmail-send-it
@@ -917,14 +898,13 @@ long messages in some external browser (see `browse-url-generic-program')."
 
 (setq mu4e-html2text-command 'my-mu4e-html2text)
 
- (setq mu4e-html2text-command
+(setq mu4e-html2text-command
        "textutil -stdin -format html -convert txt -stdout")
 ;;(setq mu4e-html2text-command "w3m -T text/html")
 
-;; you can quickly switch to your Inbox -- press ja
 (setq mu4e-maildir-shortcuts
-      '(("/Amazon/INBOX"               . ?a)
-       ("/Amazon/Sent Items"               . ?s)
+      '(("/Personal/INBOX"               . ?a)
+       ("/Personal/Sent Items"               . ?s)
       ;; Add others if needed.
        ))
 ;; http://www.djcbsoftware.nl/code/mu/mu4e/Bookmarks.html
@@ -1047,7 +1027,7 @@ Finding it very useful.
       (key-chord-define-global "FF"     'find-file)))
 #+END_SRC
 
-#+begin_src emacs-lisp(
+#+begin_src emacs-lisp
 (bind-key "C-t" 'my/key-chord-commands/body)
 #+end_src
 ** Calendor
@@ -1185,7 +1165,7 @@ Basic yasnippet
     (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
     (magit-gh-pulls-mode 1)
     (magit-gh-pulls-reload))
-(use-package magit-gh-pulls)
+;;(use-package magit-gh-pulls)
 (defvar magit-last-seen-setup-instructions "1.4.0")
 #+END_SRC
 
@@ -1225,7 +1205,7 @@ Useful, has more details than just popup, saves time  to visit the code reposito
  |---------------+-------------------------------+-----------------------+-----------------------------------------------------|
  | organizer.org | ~/personal/organizer.org      | Inbox                 | All incoming for org capture.                       |
  |               |                               | Quick Notes           | C-c c captures, tasks, todos                        |
- | amazon.org    | ~/personal/org/amazon.org     | Team                  | Work Items Project, on call meetings                |
+ | work-1.org    | ~/personal/org/amazon.org     | Team                  | Work Items Project, on call meetings                |
  |               |                               | - Projects >          | random and journal entries                          |
  |               |                               | - On-Call             |                                                     |
  |               |                               | - Meetings            |                                                     |
@@ -1373,7 +1353,7 @@ This makes it easier to add links from outside.
 
 #+BEGIN_SRC emacs-lisp
 ;;store org-mode links to messages
-(require 'org-mu4e)
+;;(require 'org-mu4e)
 ;;store link to message if in header view, not to header query
 (setq org-mu4e-link-query-in-headers-mode nil)
 #+END_SRC
@@ -1514,7 +1494,6 @@ This makes it easier to add links from outside.
             ("A" "#+ascii: ")
             ("I" "#+include %file ?" "<include file=%file markup=\"?\">")))
   #+end_src
-
 *** Refiling
 Refiling helps you to move under headlines.
 
@@ -1776,7 +1755,6 @@ Sorting
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (setq org-agenda-files (quote ("~/personal/organizer.org"
-			       "~/personal/org/amazon.org"
 			       "~/personal/org/personal.org"
 			       "~/personal/org/learn.org"
 			       "~/personal/org/finance.org"
@@ -2250,9 +2228,10 @@ See agenda with todo lists. Custom command.
 (setq multi-term-program "/usr/local/bin/fish -l")
 
 (when (require 'multi-term nil t)
-  (global-set-key (kbd "<s-return>") 'multi-term)
+  (global-set-key (kbd "<alt-return>") 'multi-term)
   (setq multi-term-buffer-name "term"
         multi-term-program "/usr/local/bin/fish"))
+
 #+END_SRC
 ** Self tracking
 *** Quantified
