@@ -119,7 +119,7 @@ From http://www.wisdomandwonder.com/wp-content/uploads/2014/03/C3F.html:
 
 Start in full screen mode.
 #+BEGIN_SRC emacs-lisp
-(toggle-frame-fullscreen)
+;;(toggle-frame-fullscreen)
 #+END_SRC
 
 **** Disable startup screen and menu bar
@@ -205,14 +205,14 @@ Why would someone want to close emacs ?
 *** Theme and font
 Theme - I keep changing themes.
 #+BEGIN_SRC emacs-lisp
-;;(load-theme 'zeno t)
+(load-theme 'nimbus t)
 #+END_SRC
 
 Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil
                     :font "Menlo"
-                    :height 110
+                    :height 120
                     :weight 'regular)
 #+END_SRC
 *** Modeline
@@ -1095,7 +1095,7 @@ Finding it very useful.
 (use-package elfeed-org
   :config
   (elfeed-org)
-  (setq rmh-elfeed-org-files (list "~/.emacs.d/config.org")))
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/blogs.org")))
 
 (use-package elfeed-goodies
   :config
