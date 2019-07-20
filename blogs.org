@@ -22,3 +22,5 @@
 ***** http://sachachua.com/blog/category/emacs/feed/              :sachachua:
 ***** http://planet.emacsen.org/atom.xml
 ***** http://ergoemacs.org/emacs/blog.xml
+**** Martin fowler
+***** https://martinfowler.com/feed.atom
