@@ -24,3 +24,5 @@
 ***** http://ergoemacs.org/emacs/blog.xml
 **** Martin fowler
 ***** https://martinfowler.com/feed.atom
+**** Me
+***** https://nageshrsalunke.me/index.xml
